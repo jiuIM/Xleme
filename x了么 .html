@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>本地生活服务AI GEO优化系统 | AI搜索时代商家必备</title>
+    <!-- 修复1：添加更稳定的CDN链接 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- 修复2：使用更可靠的Lucide图标加载方式 -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <style>
+        body { font-family: 'Noto Sans SC', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .progress-ring {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        .checklist-item {
+            transition: all 0.3s ease;
+        }
+        .checklist-item:hover {
+            transform: translateX(5px);
+        }
+        .tab-active {
+            border-bottom: 3px solid #667eea;
+            color: #667eea;
+            font-weight: 600;
+        }
+        .schema-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-left: 4px solid #667eea;
+        }
+        .ai-preview {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            position: relative;
+        }
+        .ai-preview::before {
+            content: "AI搜索结果预览";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #667eea;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        /* 修复3：添加响应式改进 */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem !important; }
+            .score-ring-container { width: 120px !important; height: 120px !important; }
+        }
+        /* 修复4：添加打印样式 */
+        @media print {
+            .no-print { display: none !important; }
+            .print-break { page-break-before: always; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden bg-white border-b border-slate-200">
+        <div class="absolute inset-0 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 opacity-70"></div>
+        <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-indigo-200 to-purple-200 rounded-full blur-3xl opacity-30 animate-float"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+            <div class="text-center max-w-4xl mx-auto">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 text-sm font-medium mb-6">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    <span>2026 AI搜索优化标准 · 生成引擎优化(GEO)</span>
+                </div>
+                <h1 class="hero-title text-5xl md:text-6xl font-black mb-6 leading-tight">
+                    让AI主动推荐<br>
+                    <span class="gradient-text">你的本地商家</span>
+                </h1>
+                <p class="text-xl text-slate-600 mb-8 leading-relaxed">
+                    专为餐饮、美容、健身、亲子等本地生活商家打造的AI GEO优化系统。<br>
+                    优化DeepSeek、ChatGPT、Google SGE等AI引擎的引用率，将线上信息优势转化为线下真实客流。
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="scrollToSection('optimizer')" class="px-8 py-4 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition shadow-lg hover:shadow-xl flex items-center gap-2">
+                        <i data-lucide="zap" class="w-5 h-5"></i>
+                        开始优化检测
+                    </button>
+                    <button onclick="scrollToSection('templates')" class="px-8 py-4 bg-white text-indigo-600 border-2 border-indigo-600 rounded-xl font-semibold hover:bg-indigo-50 transition flex items-center gap-2">
+                        <i data-lucide="file-text" class="w-5 h-5"></i>
+                        查看优化模版
+                    </button>
+                </div>
+                
+                <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-slate-500">
+                    <div class="flex items-center justify-center gap-2">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                        <span>NAP一致性检测</span>
+                    </div>
+                    <div class="flex items-center justify-center gap-2">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                        <span>结构化数据标记</span>
+                    </div>
+                    <div class="flex items-center justify-center gap-2">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                        <span>对话式内容生成</span>
+                    </div>
+                    <div class="flex items-center justify-center gap-2">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                        <span>EEAT权威信号</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="optimizer">
+        
+        <!-- Dashboard Grid -->
+        <div class="grid lg:grid-cols-3 gap-8 mb-12">
+            
+            <!-- Left Panel: Business Info Input -->
+            <div class="lg:col-span-1 space-y-6">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sticky top-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="store" class="w-5 h-5 text-indigo-600"></i>
+                        商家信息录入
+                    </h2>
+                    
+                    <form id="businessForm" class="space-y-4" onsubmit="event.preventDefault(); generateOptimization();">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">商家名称 *</label>
+                            <input type="text" id="bizName" class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="例如：南山科技园深夜烤鱼" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">详细地址 *</label>
+                            <input type="text" id="bizAddress" class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="深圳市南山区科技园XX路XX号" required>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">联系电话</label>
+                                <input type="tel" id="bizPhone" class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="0755-XXXXXXX">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">营业时间</label>
+                                <input type="text" id="bizHours" class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="17:00-02:00">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">主营品类 *</label>
+                            <select id="bizCategory" class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition bg-white">
+                                <option value="restaurant">餐饮美食</option>
+                                <option value="beauty">美容美发</option>
+                                <option value="fitness">健身运动</option>
+                                <option value="parenting">亲子教育</option>
+                                <option value="pet">宠物服务</option>
+                                <option value="auto">汽车服务</option>
+                                <option value="medical">医疗健康</option>
+                                <option value="other">其他服务</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">核心卖点/场景标签（用逗号分隔）</label>
+                            <textarea id="bizTags" rows="3" class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none" placeholder="深夜营业,加班族首选,免费WiFi,团体聚会,包间可订,宠物友好..."></textarea>
+                            <p class="text-xs text-slate-500 mt-1">这些标签将帮助AI理解你的服务场景</p>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">顾客真实评价原话（用于AI引用）</label>
+                            <textarea id="bizReviews" rows="3" class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none" placeholder="复制大众点评/美团上带地名的真实好评，例如：加班到10点只有你家还亮灯，宝安深夜食堂首选..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition transform hover:scale-[1.02] active:scale-[0.98]">
+                            生成AI优化方案
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Panel: Optimization Dashboard -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- Score Card -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+                        <h2 class="text-xl font-bold flex items-center gap-2">
+                            <i data-lucide="target" class="w-5 h-5 text-indigo-600"></i>
+                            AI可见度评分
+                        </h2>
+                        <div class="flex items-center gap-2 text-sm text-slate-600 flex-wrap">
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-green-500"></span>优秀: 80-100</span>
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-yellow-500"></span>需改进: 60-79</span>
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-red-500"></span>急需优化: &lt;60</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <div class="text-center">
+                            <div class="score-ring-container relative w-32 h-32 mx-auto mb-3">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <circle class="text-slate-200 stroke-current" stroke-width="8" cx="50" cy="50" r="40" fill="transparent"></circle>
+                                    <circle id="scoreRing" class="text-indigo-600 progress-ring stroke-current" stroke-width="8" stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span id="totalScore" class="text-3xl font-bold text-indigo-600">--</span>
+                                </div>
+                            </div>
+                            <p class="text-sm font-medium text-slate-600">综合AI可见度</p>
+                        </div>
+                        
+                        <div class="md:col-span-3 grid grid-cols-2 gap-4">
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:shadow-md transition">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-sm font-medium text-slate-700">NAP一致性</span>
+                                    <span id="napScore" class="text-lg font-bold text-indigo-600">--</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-2">
+                                    <div id="napBar" class="bg-indigo-600 h-2 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-2">名称、地址、电话全网统一</p>
+                            </div>
+                            
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:shadow-md transition">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-sm font-medium text-slate-700">结构化数据</span>
+                                    <span id="schemaScore" class="text-lg font-bold text-indigo-600">--</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-2">
+                                    <div id="schemaBar" class="bg-purple-600 h-2 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-2">Schema标记完整度</p>
+                            </div>
+                            
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:shadow-md transition">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-sm font-medium text-slate-700">对话式内容</span>
+                                    <span id="contentScore" class="text-lg font-bold text-indigo-600">--</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-2">
+                                    <div id="contentBar" class="bg-pink-600 h-2 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-2">FAQ与长尾问答覆盖</p>
+                            </div>
+                            
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:shadow-md transition">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-sm font-medium text-slate-700">EEAT权威度</span>
+                                    <span id="eeatScore" class="text-lg font-bold text-indigo-600">--</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-2">
+                                    <div id="eeatBar" class="bg-indigo-600 h-2 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-2">经验、专业、权威、信任</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Search Preview -->
+                <div class="ai-preview rounded-2xl p-6 bg-white">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="bot" class="w-5 h-5 text-indigo-600"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm text-slate-500 mb-2 break-words">用户提问："<span id="previewQuery">深圳南山科技园附近深夜还在营业的烤鱼店推荐</span>"</p>
+                            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-3">
+                                <div class="flex items-center justify-between flex-wrap gap-2">
+                                    <h3 class="font-bold text-lg text-slate-800" id="previewTitle">南山科技园深夜烤鱼</h3>
+                                    <span class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full font-medium whitespace-nowrap">营业中</span>
+                                </div>
+                                <p class="text-slate-600 text-sm leading-relaxed break-words" id="previewDesc">
+                                    位于南山科技园的深夜食堂，专为加班族提供新鲜烤鱼。顾客评价："加班到10点只有你家还亮灯"。提供免费WiFi、包间预订，适合团体聚会。营业至凌晨2点。
+                                </p>
+                                <div class="flex flex-wrap gap-2" id="previewTags">
+                                    <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">深夜营业</span>
+                                    <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">科技园</span>
+                                    <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">加班族首选</span>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-4 text-xs text-slate-500 pt-2 border-t border-slate-100">
+                                    <span class="flex items-center gap-1 min-w-0">
+                                        <i data-lucide="map-pin" class="w-3 h-3 flex-shrink-0"></i>
+                                        <span class="truncate" id="previewAddress">深圳市南山区科技园XX路</span>
+                                    </span>
+                                    <span class="flex items-center gap-1 whitespace-nowrap">
+                                        <i data-lucide="phone" class="w-3 h-3"></i>
+                                        <span id="previewPhone">0755-XXXXXXX</span>
+                                    </span>
+                                    <span class="flex items-center gap-1 whitespace-nowrap">
+                                        <i data-lucide="clock" class="w-3 h-3"></i>
+                                        <span id="previewHours">17:00-02:00</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-2">基于GEO优化后的预期AI引用效果</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Items -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="list-checks" class="w-5 h-5 text-indigo-600"></i>
+                        优化任务清单
+                    </h3>
+                    <div class="space-y-3" id="actionItems">
+                        <div class="checklist-item flex items-start gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50 hover:shadow-sm cursor-pointer" onclick="toggleCheck(this.querySelector('input'))">
+                            <input type="checkbox" class="mt-1 w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500 cursor-pointer" onchange="event.stopPropagation(); toggleCheck(this)">
+                            <div class="flex-1">
+                                <p class="font-medium text-slate-800">完善Google Business Profile/百度地图商户资料</p>
+                                <p class="text-sm text-slate-600">上传高清门头照片，确保NAP信息完全一致，添加所有服务属性标签</p>
+                            </div>
+                            <span class="px-2 py-1 bg-red-100 text-red-600 text-xs rounded font-medium whitespace-nowrap">高优先级</span>
+                        </div>
+                        <div class="checklist-item flex items-start gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50 hover:shadow-sm cursor-pointer" onclick="toggleCheck(this.querySelector('input'))">
+                            <input type="checkbox" class="mt-1 w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500 cursor-pointer" onchange="event.stopPropagation(); toggleCheck(this)">
+                            <div class="flex-1">
+                                <p class="font-medium text-slate-800">部署LocalBusiness结构化数据</p>
+                                <p class="text-sm text-slate-600">在官网添加Schema标记，包含geo坐标、营业时间、价格区间等</p>
+                            </div>
+                            <span class="px-2 py-1 bg-red-100 text-red-600 text-xs rounded font-medium whitespace-nowrap">高优先级</span>
+                        </div>
+                        <div class="checklist-item flex items-start gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50 hover:shadow-sm cursor-pointer" onclick="toggleCheck(this.querySelector('input'))">
+                            <input type="checkbox" class="mt-1 w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500 cursor-pointer" onchange="event.stopPropagation(); toggleCheck(this)">
+                            <div class="flex-1">
+                                <p class="font-medium text-slate-800">创建"场景+地点"FAQ内容</p>
+                                <p class="text-sm text-slate-600">撰写"南山科技园加班晚餐推荐"、"宝安深夜烤鱼哪里吃"等长尾问答</p>
+                            </div>
+                            <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded font-medium whitespace-nowrap">中优先级</span>
+                        </div>
+                        <div class="checklist-item flex items-start gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50 hover:shadow-sm cursor-pointer" onclick="toggleCheck(this.querySelector('input'))">
+                            <input type="checkbox" class="mt-1 w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500 cursor-pointer" onchange="event.stopPropagation(); toggleCheck(this)">
+                            <div class="flex-1">
+                                <p class="font-medium text-slate-800">收集并展示真实顾客评价</p>
+                                <p class="text-sm text-slate-600">引导顾客在评论中包含地点和服务场景关键词，如"科技园附近最棒的..."</p>
+                            </div>
+                            <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded font-medium whitespace-nowrap">中优先级</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 修复5：添加导出功能 -->
+                    <div class="mt-4 pt-4 border-t border-slate-200 flex gap-3 no-print">
+                        <button onclick="exportReport()" class="flex-1 py-2 bg-indigo-50 text-indigo-600 rounded-lg text-sm font-medium hover:bg-indigo-100 transition flex items-center justify-center gap-2">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            导出优化报告
+                        </button>
+                        <button onclick="window.print()" class="flex-1 py-2 bg-slate-50 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-100 transition flex items-center justify-center gap-2">
+                            <i data-lucide="printer" class="w-4 h-4"></i>
+                            打印清单
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Templates Section -->
+        <div id="templates" class="mb-12 print-break">
+            <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+                <h2 class="text-2xl font-bold flex items-center gap-2">
+                    <i data-lucide="layout-template" class="w-6 h-6 text-indigo-600"></i>
+                    AI GEO优化模版库
+                </h2>
+                <div class="flex gap-2 bg-slate-100 p-1 rounded-lg">
+                    <button onclick="switchTab('schema')" id="tab-schema" class="px-4 py-2 rounded-md font-medium transition tab-active bg-white shadow-sm">结构化数据</button>
+                    <button onclick="switchTab('content')" id="tab-content" class="px-4 py-2 rounded-md font-medium transition text-slate-600 hover:text-indigo-600">内容模版</button>
+                    <button onclick="switchTab('faq')" id="tab-faq" class="px-4 py-2 rounded-md font-medium transition text-slate-600 hover:text-indigo-600">FAQ生成器</button>
+                </div>
+            </div>
+
+            <!-- Schema Markup Templates -->
+            <div id="panel-schema" class="grid md:grid-cols-2 gap-6">
+                <div class="schema-card rounded-xl p-6 bg-white shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-lg text-slate-800">LocalBusiness Schema</h3>
+                        <button onclick="copyCode('schema-local')" class="text-indigo-600 hover:text-indigo-700 text-sm font-medium flex items-center gap-1 px-3 py-1 rounded hover:bg-indigo-50 transition">
+                            <i data-lucide="copy" class="w-4 h-4"></i>
+                            复制
+                        </button>
+                    </div>
+                    <pre id="schema-local" class="bg-slate-900 text-slate-100 p-4 rounded-lg text-xs overflow-x-auto leading-relaxed"><code>{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "南山科技园深夜烤鱼",
+  "image": "https://example.com/photo.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "科技园南区XX路XX号",
+    "addressLocality": "深圳市",
+    "addressRegion": "广东省",
+    "postalCode": "518057",
+    "addressCountry": "CN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 22.5431,
+    "longitude": 113.9465
+  },
+  "telephone": "+86-755-XXXXXXXX",
+  "openingHours": "Mo-Su 17:00-02:00",
+  "priceRange": "¥¥",
+  "servesCuisine": "川菜,烤鱼",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "326"
+  }
+}</code></pre>
+                    <p class="text-sm text-slate-600 mt-3">部署在官网首页&lt;head&gt;或&lt;body&gt;内，帮助AI引擎准确理解你的地理位置和服务信息</p>
+                </div>
+
+                <div class="schema-card rounded-xl p-6 bg-white shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-lg text-slate-800">FAQPage Schema</h3>
+                        <button onclick="copyCode('schema-faq')" class="text-indigo-600 hover:text-indigo-700 text-sm font-medium flex items-center gap-1 px-3 py-1 rounded hover:bg-indigo-50 transition">
+                            <i data-lucide="copy" class="w-4 h-4"></i>
+                            复制
+                        </button>
+                    </div>
+                    <pre id="schema-faq" class="bg-slate-900 text-slate-100 p-4 rounded-lg text-xs overflow-x-auto leading-relaxed"><code>{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "南山科技园附近哪家烤鱼店营业到最晚？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "南山科技园深夜烤鱼营业至凌晨2点，是科技园加班族的首选深夜食堂，提供新鲜活鱼现烤..."
+    }
+  },{
+    "@type": "Question",
+    "name": "深圳宝安深夜聚餐推荐哪里？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "位于南山科技园的深夜烤鱼提供包间预订服务，适合团体聚餐，营业至凌晨2点..."
+    }
+  }]
+}</code></pre>
+                    <p class="text-sm text-slate-600 mt-3">针对"地点+场景"类对话式查询优化，提升被AI引用的概率</p>
+                </div>
+            </div>
+
+            <!-- Content Templates -->
+            <div id="panel-content" class="hidden grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg mb-3 text-indigo-600">标题优化公式</h3>
+                    <div class="space-y-3">
+                        <div class="p-3 bg-indigo-50 rounded-lg border-l-4 border-indigo-500">
+                            <p class="font-medium text-slate-800">[地点] + [场景] + [核心服务]</p>
+                            <p class="text-sm text-slate-600 mt-1">示例：南山科技园加班狗的第7顿烤鱼</p>
+                        </div>
+                        <div class="p-3 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+                            <p class="font-medium text-slate-800">[时间/场景] + [地点] + [解决方案]</p>
+                            <p class="text-sm text-slate-600 mt-1">示例：凌晨1点深圳南山还能吃到的新鲜烤鱼</p>
+                        </div>
+                        <div class="p-3 bg-pink-50 rounded-lg border-l-4 border-pink-500">
+                            <p class="font-medium text-slate-800">[人群] + [地点] + [痛点解决]</p>
+                            <p class="text-sm text-slate-600 mt-1">示例：程序员深夜食堂：科技园24小时营业的暖心烤鱼店</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg mb-3 text-indigo-600">内容结构模版（倒金字塔）</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start gap-3">
+                            <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
+                            <div>
+                                <p class="font-medium text-slate-800">直接回答（30字内）</p>
+                                <p class="text-slate-600">深圳南山科技园深夜烤鱼是科技园区营业至凌晨2点的专业烤鱼店...</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+                            <div>
+                                <p class="font-medium text-slate-800">关键信息（ bullet points ）</p>
+                                <p class="text-slate-600">• 营业时间：17:00-02:00 • 特色：活鱼现杀 • 场景：加班聚餐、深夜食堂</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+                            <div>
+                                <p class="font-medium text-slate-800">详细背景与证据</p>
+                                <p class="text-slate-600">顾客真实评价、具体地址、联系电话、服务细节...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Generator -->
+            <div id="panel-faq" class="hidden bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                <div class="mb-6">
+                    <h3 class="font-bold text-lg mb-2">AI对话式FAQ生成器</h3>
+                    <p class="text-slate-600 text-sm">基于你的商家信息，自动生成针对AI搜索优化的长尾问答内容</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-4 mb-6">
+                    <select id="faqCategory" class="px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 bg-white">
+                        <option value="location">地点类查询</option>
+                        <option value="scenario">场景类查询</option>
+                        <option value="comparison">对比类查询</option>
+                        <option value="guide">指南类查询</option>
+                    </select>
+                    <input type="text" id="faqKeyword" placeholder="输入关键词（如：南山科技园）" class="px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500">
+                    <button onclick="generateFAQ()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium">生成FAQ</button>
+                </div>
+
+                <div id="faqResults" class="space-y-4">
+                    <div class="p-4 border border-slate-200 rounded-lg bg-slate-50 hover:shadow-md transition">
+                        <p class="font-medium text-slate-800 mb-2">Q: 南山科技园附近哪家店适合加班到深夜吃晚餐？</p>
+                        <p class="text-slate-600 text-sm mb-3">A: 南山科技园深夜烤鱼位于科技园核心区，专门服务加班人群，营业至凌晨2点。店内提供...</p>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-indigo-100 text-indigo-700 text-xs rounded">长尾词</span>
+                            <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">高转化意图</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GEO Tips Section -->
+        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 text-white mb-12">
+            <h2 class="text-2xl font-bold mb-6">本地生活GEO优化核心法则</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20 hover:bg-white/20 transition">
+                    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mb-3">
+                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">地理围栏精准化</h3>
+                    <p class="text-sm text-indigo-100">在内容中自然融入"商圈+地标+距离"描述，如"距离南山科技园地铁站步行5分钟"，帮助AI建立空间关联</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20 hover:bg-white/20 transition">
+                    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mb-3">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">真人语气引用</h3>
+                    <p class="text-sm text-indigo-100">AI最信"真人语气"。直接引用顾客评论中的原话，包含地名和场景描述，如"加班到10点只有你家还亮灯"</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20 hover:bg-white/20 transition">
+                    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mb-3">
+                        <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">月度内容刷新</h3>
+                    <p class="text-sm text-indigo-100">AI喜新厌旧。设置30天更新周期，替换过时促销信息，添加季节性场景标签（如"回南天除湿套餐"）</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 修复6：添加页脚和部署说明 -->
+        <footer class="border-t border-slate-200 pt-8 pb-12 text-center text-slate-500 text-sm">
+            <p class="mb-2">本地生活服务AI GEO优化系统 v1.0</p>
+            <p>基于2026年生成引擎优化(GEO)最佳实践构建</p>
+            <div class="mt-4 flex justify-center gap-4 no-print">
+                <a href="#" onclick="alert('本地HTML文件，无需服务器')" class="text-indigo-600 hover:underline">关于</a>
+                <a href="#" onclick="window.print()" class="text-indigo-600 hover:underline">打印</a>
+                <a href="#" onclick="alert('所有数据仅存储在本地浏览器中')" class="text-indigo-600 hover:underline">隐私</a>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // 修复7：更健壮的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化Lucide图标
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            } else {
+                // 备用：如果CDN加载失败，使用emoji
+                document.querySelectorAll('[data-lucide]').forEach(el => {
+                    const iconName = el.getAttribute('data-lucide');
+                    const emojiMap = {
+                        'sparkles': '✨', 'zap': '⚡', 'file-text': '📄',
+                        'check-circle': '✅', 'store': '🏪', 'target': '🎯',
+                        'bot': '🤖', 'map-pin': '📍', 'phone': '📞',
+                        'clock': '⏰', 'list-checks': '📋', 'layout-template': '📐',
+                        'copy': '📋', 'map-pin': '📍', 'message-circle': '💬',
+                        'refresh-cw': '🔄', 'download': '⬇️', 'printer': '🖨️'
+                    };
+                    el.textContent = emojiMap[iconName] || '•';
+                });
+            }
+            
+            // 预填充示例数据（延迟执行确保DOM就绪）
+            setTimeout(() => {
+                const nameInput = document.getElementById('bizName');
+                if (nameInput && !nameInput.value) {
+                    nameInput.value = '南山科技园深夜烤鱼';
+                    document.getElementById('bizAddress').value = '深圳市南山区科技园南区高新南一道';
+                    document.getElementById('bizPhone').value = '0755-86543210';
+                    document.getElementById('bizHours').value = '17:00-02:00';
+                    document.getElementById('bizTags').value = '深夜营业,加班族首选,免费WiFi,团体聚会,包间可订';
+                    document.getElementById('bizReviews').value = '加班到10点只有你家还亮灯，科技园真正的深夜食堂。鱼肉新鲜，师傅手艺很好，经常带团队来聚餐';
+                }
+            }, 100);
+        });
+
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function generateOptimization() {
+            const formData = {
+                name: document.getElementById('bizName').value || '南山科技园深夜烤鱼',
+                address: document.getElementById('bizAddress').value || '深圳市南山区科技园XX路XX号',
+                phone: document.getElementById('bizPhone').value || '0755-XXXXXXX',
+                hours: document.getElementById('bizHours').value || '17:00-02:00',
+                category: document.getElementById('bizCategory').value,
+                tags: document.getElementById('bizTags').value || '深夜营业,加班族首选,免费WiFi',
+                reviews: document.getElementById('bizReviews').value || '加班到10点只有你家还亮灯'
+            };
+
+            // 更新预览
+            const previewTitle = document.getElementById('previewTitle');
+            const previewAddress = document.getElementById('previewAddress');
+            const previewPhone = document.getElementById('previewPhone');
+            const previewHours = document.getElementById('previewHours');
+            
+            if (previewTitle) previewTitle.textContent = formData.name;
+            if (previewAddress) previewAddress.textContent = formData.address;
+            if (previewPhone) previewPhone.textContent = formData.phone;
+            if (previewHours) previewHours.textContent = formData.hours;
+            
+            const tags = formData.tags.split(',').filter(t => t.trim()).slice(0, 3);
+            const previewTags = document.getElementById('previewTags');
+            if (previewTags) {
+                previewTags.innerHTML = tags.map(tag => 
+                    `<span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">${tag.trim()}</span>`
+                ).join('');
+            }
+
+            // 生成描述
+            const reviewSnippet = formData.reviews.split('，')[0] || formData.reviews;
+            const previewDesc = document.getElementById('previewDesc');
+            if (previewDesc) {
+                previewDesc.textContent = `位于${formData.address.replace('深圳市', '').replace('区', '区')}的${formData.name}，${tags[0] || '专业服务'}。顾客评价："${reviewSnippet}"。${tags[1] ? '提供' + tags[1] + '，' : ''}${tags[2] ? tags[2] + '。' : ''}营业至${formData.hours.split('-')[1] || '深夜'}。`;
+            }
+
+            // 计算分数（基于填写完整度）
+            let napScore = 70;
+            if (formData.name && formData.address) napScore += 15;
+            if (formData.phone) napScore += 10;
+            if (formData.hours) napScore += 5;
+            
+            let schemaScore = 75;
+            if (formData.category) schemaScore += 15;
+            if (formData.address.includes('号')) schemaScore += 10;
+            
+            let contentScore = 60;
+            if (formData.tags && formData.tags.length > 10) contentScore += 20;
+            if (formData.reviews && formData.reviews.length > 20) contentScore += 20;
+            
+            let eeatScore = 65;
+            if (formData.reviews && formData.reviews.includes('加班')) eeatScore += 20;
+            if (formData.tags && formData.tags.includes('首选')) eeatScore += 15;
+            
+            const totalScore = Math.floor((napScore + schemaScore + contentScore + eeatScore) / 4);
+
+            // 动画显示分数
+            animateScore('totalScore', 'scoreRing', totalScore, 251.2);
+            animateBar('napScore', 'napBar', Math.min(napScore, 100));
+            animateBar('schemaScore', 'schemaBar', Math.min(schemaScore, 100));
+            animateBar('contentScore', 'contentBar', Math.min(contentScore, 100));
+            animateBar('eeatScore', 'eeatBar', Math.min(eeatScore, 100));
+
+            // 更新Schema模板
+            updateSchemaTemplates(formData);
+            
+            // 重新初始化图标
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        function animateScore(scoreId, ringId, score, circumference) {
+            const scoreEl = document.getElementById(scoreId);
+            const ringEl = document.getElementById(ringId);
+            if (!scoreEl || !ringEl) return;
+            
+            const offset = circumference - (score / 100) * circumference;
+            
+            let current = 0;
+            const timer = setInterval(() => {
+                current += 2;
+                if (current >= score) {
+                    current = score;
+                    clearInterval(timer);
+                }
+                scoreEl.textContent = current;
+                ringEl.style.strokeDashoffset = circumference - (current / 100) * circumference;
+                
+                // 颜色编码
+                ringEl.classList.remove('text-indigo-600', 'text-yellow-500', 'text-red-500');
+                scoreEl.classList.remove('text-indigo-600', 'text-yellow-600', 'text-red-600');
+                
+                if (current >= 80) {
+                    ringEl.classList.add('text-indigo-600');
+                    scoreEl.classList.add('text-indigo-600');
+                } else if (current >= 60) {
+                    ringEl.classList.add('text-yellow-500');
+                    scoreEl.classList.add('text-yellow-600');
+                } else {
+                    ringEl.classList.add('text-red-500');
+                    scoreEl.classList.add('text-red-600');
+                }
+            }, 20);
+        }
+
+        function animateBar(scoreId, barId, score) {
+            const scoreEl = document.getElementById(scoreId);
+            const barEl = document.getElementById(barId);
+            if (!scoreEl || !barEl) return;
+            
+            scoreEl.textContent = score;
+            barEl.style.width = score + '%';
+            
+            barEl.classList.remove('bg-indigo-600', 'bg-purple-600', 'bg-pink-600', 'bg-green-500', 'bg-yellow-500', 'bg-red-500');
+            
+            if (score >= 80) barEl.classList.add('bg-green-500');
+            else if (score >= 60) barEl.classList.add('bg-yellow-500');
+            else barEl.classList.add('bg-red-500');
+        }
+
+        function updateSchemaTemplates(data) {
+            const localSchema = {
+                "@context": "https://schema.org",
+                "@type": "LocalBusiness",
+                "name": data.name,
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": data.address,
+                    "addressCountry": "CN"
+                },
+                "telephone": data.phone,
+                "openingHours": data.hours,
+                "servesCuisine": data.category === 'restaurant' ? '川菜,烤鱼' : '本地服务'
+            };
+            
+            const schemaEl = document.getElementById('schema-local');
+            if (schemaEl) {
+                schemaEl.textContent = JSON.stringify(localSchema, null, 2);
+            }
+        }
+
+        function switchTab(tab) {
+            // 隐藏所有面板
+            ['schema', 'content', 'faq'].forEach(t => {
+                const panel = document.getElementById('panel-' + t);
+                const tabBtn = document.getElementById('tab-' + t);
+                if (panel) panel.classList.add('hidden');
+                if (tabBtn) {
+                    tabBtn.classList.remove('tab-active', 'bg-white', 'shadow-sm');
+                    tabBtn.classList.add('text-slate-600');
+                }
+            });
+            
+            // 显示选中面板
+            const selectedPanel = document.getElementById('panel-' + tab);
+            const selectedTab = document.getElementById('tab-' + tab);
+            if (selectedPanel) selectedPanel.classList.remove('hidden');
+            if (selectedTab) {
+                selectedTab.classList.add('tab-active', 'bg-white', 'shadow-sm');
+                selectedTab.classList.remove('text-slate-600');
+            }
+        }
+
+        function copyCode(elementId) {
+            const codeEl = document.getElementById(elementId);
+            if (!codeEl) return;
+            
+            const code = codeEl.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                // 显示成功提示
+                const btn = event.target.closest('button');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<span class="text-green-600">✓ 已复制</span>';
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
+                }, 2000);
+            }).catch(err => {
+                // 备用复制方案
+                const textArea = document.createElement('textarea');
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('已复制到剪贴板');
+            });
+        }
+
+        function toggleCheck(checkbox) {
+            if (!checkbox) return;
+            const item = checkbox.closest('.checklist-item');
+            if (!item) return;
+            
+            if (checkbox.checked) {
+                item.classList.add('bg-green-50', 'border-green-300');
+                item.classList.remove('bg-slate-50', 'border-slate-200');
+            } else {
+                item.classList.remove('bg-green-50', 'border-green-300');
+                item.classList.add('bg-slate-50', 'border-slate-200');
+            }
+        }
+
+        // 修复8：添加导出报告功能
+        function exportReport() {
+            const bizName = document.getElementById('bizName').value || '未命名商家';
+            const score = document.getElementById('totalScore').textContent || '--';
+            
+            const report = `
+本地生活服务AI GEO优化报告
+============================
+商家名称：${bizName}
+检测时间：${new Date().toLocaleString('zh-CN')}
+综合评分：${score}/100
+
+优化建议：
+1. 完善Google Business Profile/百度地图商户资料
+2. 部署LocalBusiness结构化数据
+3. 创建"场景+地点"FAQ内容
+4. 收集并展示真实顾客评价
+
+本报告由AI GEO优化系统生成
+            `;
+            
+            const blob = new Blob([report], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${bizName}_GEO优化报告.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function generateFAQ() {
+            const category = document.getElementById('faqCategory').value;
+            const keyword = document.getElementById('faqKeyword').value || '南山科技园';
+            const bizName = document.getElementById('bizName').value || '深夜烤鱼';
+            
+            const templates = {
+                location: [
+                    { q: `${keyword}附近哪里可以吃夜宵？`, a: `${bizName}位于${keyword}核心区，营业至凌晨2点，是周边居民和上班族的深夜食堂首选。提供新鲜活鱼现烤，支持外卖配送。` },
+                    { q: `${keyword}周边24小时营业的餐厅推荐`, a: `在${keyword}寻找深夜美食，${bizName}提供现点现做的新鲜烤鱼，营业至凌晨2点，支持在线预订。` }
+                ],
+                scenario: [
+                    { q: `适合在${keyword}加班后聚餐的地方`, a: `${bizName}专为${keyword}加班族打造，提供安静包间和快速上菜服务，营业到凌晨2点，是团队聚餐的理想选择。` },
+                    { q: `${keyword}团建聚餐去哪里好？`, a: `${bizName}拥有可容纳20人的大包间，提供团体套餐优惠，位于${keyword}交通便利，适合公司团建。` }
+                ],
+                comparison: [
+                    { q: `${keyword}烤鱼店哪家最好吃？`, a: `根据顾客评价，${bizName}在${keyword}烤鱼店中评分4.8分，特色是活鱼现杀和秘制酱料，回头客众多。` },
+                    { q: `${keyword}传统川菜vs创新烤鱼怎么选？`, a: `${bizName}融合传统川菜工艺与现代口味，在${keyword}商圈独树一帜，既有传统麻辣也有创新口味。` }
+                ],
+                guide: [
+                    { q: `第一次去${keyword}吃烤鱼需要注意什么？`, a: `推荐${bizName}，建议提前预订包间，店内提供免费WiFi和停车位，人均消费约80-120元。` },
+                    { q: `${keyword}美食探店指南`, a: `深夜食堂篇：${bizName}营业至凌晨2点，招牌菜是香辣烤鱼和蒜蓉扇贝，适合加班后犒劳自己。` }
+                ]
+            };
+            
+            const selected = templates[category] || templates.location;
+            const faqResults = document.getElementById('faqResults');
+            if (faqResults) {
+                faqResults.innerHTML = selected.map(item => `
+                    <div class="p-4 border border-slate-200 rounded-lg bg-slate-50 hover:shadow-md transition">
+                        <p class="font-medium text-slate-800 mb-2">Q: ${item.q}</p>
+                        <p class="text-slate-600 text-sm mb-3">A: ${item.a}</p>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-indigo-100 text-indigo-700 text-xs rounded">GEO优化</span>
+                            <span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded">AI友好</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+    </script>
+</body>
+</html>
